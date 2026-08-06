@@ -122,3 +122,92 @@ border:2px solid #A855F7;
 
 </style>
 """, unsafe_allow_html=True)
+    st.markdown("""
+<h1 style="
+font-size:55px;
+font-weight:800;
+background:linear-gradient(90deg,#C026D3,#EC4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+">
+📈 StockVista
+</h1>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<h3 style="color:#E9D5FF;">
+Real-Time Stock Market Dashboard
+</h3>
+""", unsafe_allow_html=True)
+
+st.caption(
+"Track live stock prices, financial statements, ratios and historical charts."
+)
+
+st.divider()
+st.markdown("""
+<div style="
+background:linear-gradient(135deg,#211136,#31184F);
+padding:25px;
+border-radius:20px;
+border:1px solid #C026D3;
+">
+
+<h2 style="color:white;">
+📊 About StockVista
+</h2>
+
+<p style="color:#DDD6FE;font-size:17px;">
+
+StockVista helps investors analyse stocks in real time using
+Yahoo Finance.
+
+✔ Live Prices
+
+✔ Interactive Charts
+
+✔ Financial Statements
+
+✔ Financial Ratios
+
+✔ Stock Comparison
+
+✔ CSV Download
+
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
+st.divider()
+ticker = st.text_input(
+    "🔍 Search Stock Symbol",
+    value="AAPL",
+    placeholder="AAPL, TSLA, NVDA, MSFT..."
+).upper()
+
+compare_ticker = st.text_input(
+    "📊 Compare With",
+    value="MSFT"
+).upper()
+
+st.caption("Examples: AAPL • TSLA • NVDA • META • RELIANCE.NS")
+st.subheader("🌍 Market Overview")
+
+cols = st.columns(len(mkt_list))
+
+for col, (symbol, name) in zip(cols, mkt_list):
+    with col:
+        try:
+            display_market_data(symbol, name)
+        except:
+            st.metric(name, "N/A", "N/A")
+
+if st.button("🚀 Analyze Stock"):
+
+    info = get_stock_info(ticker)
+    compare_info = get_stock_info(compare_ticker)
+
+    st.divider()
+
+    st.header("📊 Stock Analysis")
